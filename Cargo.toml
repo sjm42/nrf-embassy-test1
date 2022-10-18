@@ -1,0 +1,79 @@
+[package]
+authors = ["Sami J. Mäkinen <sjm@iki.fi>"]
+edition = "2021"
+readme = "README.md"
+name = "nrf_embassy_test1"
+version = "0.1.0"
+
+
+[features]
+default = ["nrf52840_dongle"]
+# default = ["nrf52840_dk"]
+nrf52840_dongle = ["nrf52840"]
+nrf52840_dk = ["nrf52840"]
+nrf52840 = []
+
+
+[dependencies]
+
+embassy-futures = { git = "https://github.com/embassy-rs/embassy.git" }
+embassy-sync = { git = "https://github.com/embassy-rs/embassy.git" }
+embassy-executor = { git = "https://github.com/embassy-rs/embassy.git", features = [
+    # "defmt",
+    "integrated-timers",
+    "nightly",
+] }
+embassy-time = { git = "https://github.com/embassy-rs/embassy.git", features = [
+    # "defmt",
+    "defmt-timestamp-uptime",
+    "nightly",
+] }
+embassy-nrf = { git = "https://github.com/embassy-rs/embassy.git", features = [
+    # "defmt",
+    "nrf52840",
+    "time-driver-rtc1",
+    "gpiote",
+    "unstable-pac",
+    "nightly",
+] }
+# embassy-net = { git = "https://github.com/embassy-rs/embassy.git", features = ["defmt", "tcp", "dhcpv4", "medium-ethernet", "pool-16"], optional = true }
+# embassy-usb = { git = "https://github.com/embassy-rs/embassy.git", features = ["defmt"], optional = true }
+
+# defmt = "0.3"
+# defmt-rtt = "0.4"
+embedded-io = "0.3"
+static_cell = "1.0"
+cortex-m = { version = "0.7", features = ["critical-section-single-core"] }
+cortex-m-rt = "0.7"
+futures = { version = "0.3", default-features = false, features = [
+    "async-await",
+] }
+
+
+# panic-probe = { version = "0.3", features = [
+# "print-defmt"
+panic-halt = "0.2"
+
+
+# this lets you use `cargo fix`!
+[[bin]]
+name = "nrf_embassy_test1"
+
+test = false
+bench = false
+
+# identical profiles haha
+
+[profile.release]
+opt-level = 'z'
+codegen-units = 1 # better optimizations
+debug = true      # symbols are nice and they don't increase the size on Flash
+lto = true        # better optimizations
+
+[profile.dev]
+opt-level = 'z'
+codegen-units = 1 # better optimizations
+debug = true      # symbols are nice and they don't increase the size on Flash
+lto = true        # better optimizations
+
+# EOF

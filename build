@@ -1,0 +1,48 @@
+#!/bin/bash
+set -e
+#set -x
+
+usage()
+{
+	echo "Usage: $0 r|d b|c|f"
+	echo "  Hardware: r = nRf52840-dongle, d = nrf52840-Dk"
+	echo "  Operation: b = build, c = clippy, f = cargo flash"
+    exit 1
+}
+
+case "$1" in
+nR*|R*|r*)
+    feat="nrf52840_dongle"
+    tgt="thumbv7em-none-eabihf"
+    chip="nRF52840_xxAA"
+    ;;
+D*|d*)
+    feat="nrf52840_dk"
+    tgt="thumbv7em-none-eabihf"
+    chip="nRF52840_xxAA"
+    ;;
+*)
+    usage
+    ;;
+esac
+
+flags="--release --no-default-features --features $feat --target $tgt"
+case "$2" in
+B*|b*)
+    set -x
+    cargo build $flags
+    ;;
+C*|c*)
+    set -x
+    cargo clippy $flags
+    ;;
+F*|f*)
+    set -x
+    cargo flash --chip $chip
+    ;;
+*)
+    usage
+    ;;
+esac
+exit 0
+# EOF
