@@ -5,6 +5,12 @@ readme = "README.md"
 name = "nrf_embassy_test1"
 version = "0.1.0"
 
+# For softdevice use:
+# sjm@ritsa:~/Downloads/nRF$ probe-rs-cli download --chip nrf52840 --format hex s140_nrf52_7.3.0_softdevice.hex
+
+# Restore dfu bootloader:
+# sjm@ritsa:~/Downloads/nRF$ probe-rs-cli download --chip nrf52840 --format hex 7853.pca10059_bootloader_mbr_v1.0.1.hex 
+
 
 [features]
 default = ["nrf52840_dongle"]

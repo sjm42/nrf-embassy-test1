@@ -16,7 +16,7 @@ use embassy_time::{Duration, Timer};
 #[embassy_executor::main]
 async fn main(_spawner: Spawner) {
     let p = embassy_nrf::init(Default::default());
-
+    
     let mut led = Output::new(p.P0_06, Level::High, OutputDrive::Standard);
 
     loop {
