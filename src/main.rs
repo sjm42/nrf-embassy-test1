@@ -19,6 +19,12 @@ async fn main(_spawner: Spawner) -> ! {
 
     let mut led = Output::new(p.P0_06, Level::High, OutputDrive::Standard);
 
+    let led2 = Some([
+        p0.p0_08.into_push_pull_output(Level::High).degrade(),
+        p1.p1_09.into_push_pull_output(Level::High).degrade(),
+        p0.p0_12.into_push_pull_output(Level::High).degrade(),
+    ]);
+
     loop {
         led.set_high();
         Timer::after(Duration::from_millis(500)).await;
